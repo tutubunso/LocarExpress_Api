@@ -52,3 +52,14 @@ class UserSerializer(serializers.ModelSerializer):
                 'validators':[UnicodeUsernameValidator()]
             }
         }
+        
+class PersonnelsSerializer(serializers.ModelSerializer):
+    def to_representation(self,instance):
+        representation = super().to_representation(instance)
+        #representation['user'] = UserSerializer(instance.user,many=False).data
+        user=User.objects.get(id = instance.user.id)
+        print(user)
+        group = [group.name for group in user.groups.all()]
+        representation['user']={'id':user.id,'username':user.username,'first_name':user.first_name,'last_name':user.last_name,'group':group}
+        return representation
+    user=UserSerializer()
