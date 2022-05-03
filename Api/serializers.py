@@ -79,3 +79,23 @@ class ChauffeurSerializer(serializers.ModelSerializer):
         model = Chauffeur
         fields = '__all__'
 
+class TarifSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tarif
+        fields = '__all__'
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = '__all__'
+
+class EtatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Etat
+        fields = '__all__'
+
+class CarburantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Carburant
+        fields = '__all__'
+
