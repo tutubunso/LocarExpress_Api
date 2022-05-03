@@ -62,3 +62,43 @@ class PersonnelsViewSet(viewsets.ModelViewSet):
         personnel.save()
         serializer = PersonnelsSerializer(personnel,many=False).data
         return Response(serializer,201)
+
+class CarburantViewSet(viewsets.ModelViewSet):
+    serializer_class = CarburantSerializer
+    permission_classes = IsAuthenticated,
+    queryset = Carburant.objects.all().order_by('-id')
+
+class EtatViewSet(viewsets.ModelViewSet):
+    serializer_class = EtatSerializer
+    queryset = Etat.objects.all().order_by('-id')
+    permission_classes = IsAuthenticated,
+
+class LocationViewSet(viewsets.ModelViewSet):
+    serializer_class = LocationSerializer
+    queryset = Location.objects.all().order_by('-id')
+    permission_classes = IsAuthenticated,
+
+class TarifViewSet(viewsets.ModelViewSet):
+    serializer_class = TarifSerializer
+    queryset = Tarif.objects.all().order_by('-id')
+    permission_classes = IsAuthenticated,
+
+class ChauffeurViewSet(viewsets.ModelViewSet):
+    serializer_class = ChauffeurSerializer
+    queryset = Chauffeur.objects.all().order_by('-id')
+    permission_classes = IsAuthenticated,
+
+class DocumentViewSet(viewsets.ModelViewSet):
+    serializer_class = DocumentSerializer
+    queryset = Document.objects.all().order_by('-id')
+    permission_classes = IsAuthenticated,
+
+class VoitureViewSet(viewsets.ModelViewSet):
+    serializer_class = VoitureSerializer
+    queryset = Voiture.objects.all().order_by('-id')
+    permission_classes = IsAuthenticated,
+
+class VoitureViewSet(viewsets.ModelViewSet):
+    serializer_class = VoitureSerializer
+    queryset = Voiture.objects.all().order_by('-id')
+    permission_classes = IsAuthenticated,
