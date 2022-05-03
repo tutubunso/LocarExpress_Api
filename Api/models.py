@@ -28,3 +28,29 @@ class Etat(models.Model):
 
 	def __str__(self):
 		return f"Nom:{self.nom}"
+
+class Voiture(models.Model):
+	id = models.AutoField(primary_key=True)
+	promoteur = models.ForeignKey(Personnels, related_name='person_promo',on_delete=models.CASCADE,blank=True)
+	consomation = models.ForeignKey(Carburant, related_name='conso_carbu',on_delete=models.CASCADE,blank=True)
+	etat = models.ForeignKey(Etat, related_name='etat_voiture',on_delete=models.CASCADE,blank=True)
+	marque =  models.CharField(max_length=100)
+	place =  models.IntegerField()
+	plaque =  models.CharField(max_length=200,null=True)
+	vendu = models.BooleanField()
+	location = models.BooleanField()
+	date_arrive =  models.DateField()
+
+	def __str__(self):
+		return f"Marque:{self.marque} Place:{self.place} Plaque:{self.plaque}"
+
+class Document(models.Model):
+	id = models.AutoField(primary_key=True)
+	voiture = models.ForeignKey(Voiture, related_name='docu_voiture',on_delete=models.CASCADE,blank=True,editable=False)
+	carte_grise = models.CharField(max_length=150)
+	carte_rose =  models.CharField(max_length=100)
+	assurance =  models.CharField(max_length=150)
+	controle_technique =  models.CharField(max_length=28)
+
+	def __str__(self):
+		return f"Carte Grise:{self.carte_grise} Carte Rose:{self.carte_rose}"
