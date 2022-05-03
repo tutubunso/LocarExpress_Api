@@ -52,7 +52,7 @@ class UserSerializer(serializers.ModelSerializer):
                 'validators':[UnicodeUsernameValidator()]
             }
         }
-        
+
 class PersonnelsSerializer(serializers.ModelSerializer):
     def to_representation(self,instance):
         representation = super().to_representation(instance)
@@ -63,3 +63,19 @@ class PersonnelsSerializer(serializers.ModelSerializer):
         representation['user']={'id':user.id,'username':user.username,'first_name':user.first_name,'last_name':user.last_name,'group':group}
         return representation
     user=UserSerializer()
+
+class VoitureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Voiture
+        fields = '__all__'
+
+class DocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Document
+        fields = '__all__'
+
+class ChauffeurSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chauffeur
+        fields = '__all__'
+
