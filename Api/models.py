@@ -54,3 +54,22 @@ class Document(models.Model):
 
 	def __str__(self):
 		return f"Carte Grise:{self.carte_grise} Carte Rose:{self.carte_rose}"
+
+class Chauffeur(models.Model):
+	id = models.AutoField(primary_key=True)
+	nom =  models.CharField(max_length=100)
+	prenom =  models.CharField(max_length=100)
+	adresse =  models.CharField(max_length=100)
+	tel =  models.IntegerField()
+	qualification= models.CharField(max_length=200)
+
+	def __str__(self):
+		return f"Nom:{self.nom} prenom:{self.prenom} Qualification:{self.qualification}"
+
+class Tarif(models.Model):
+	id = models.AutoField(primary_key=True)
+	voiture = models.ForeignKey(Voiture, related_name='tarif_voiture',on_delete=models.CASCADE,blank=True,editable=False)
+	prix_jour =  models.FloatField()
+
+	def __str__(self):
+		return f"Voiture:{self.voiture.max_length} Prix par Jour:{self.prix_jour}"
