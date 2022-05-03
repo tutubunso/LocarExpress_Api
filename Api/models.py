@@ -14,3 +14,17 @@ class Personnels(models.Model):
 
 	def __str__(self):
 		return f" Nom:{self.user.first_name} CNI :{self.cni} Adresse :{self.adresse}"
+
+class Carburant(models.Model):
+	id = models.AutoField(primary_key=True)
+	nom =  models.CharField(max_length=100)
+
+	def __str__(self):
+		return f"Nom:{self.nom}"
+
+class Etat(models.Model):
+	id = models.AutoField(primary_key=True)
+	nom =  models.CharField(max_length=100)
+
+	def __str__(self):
+		return f"Nom:{self.nom}"
