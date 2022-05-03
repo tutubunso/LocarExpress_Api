@@ -73,3 +73,16 @@ class Tarif(models.Model):
 
 	def __str__(self):
 		return f"Voiture:{self.voiture.max_length} Prix par Jour:{self.prix_jour}"
+
+class Location(models.Model):
+	id = models.AutoField(primary_key=True)
+	personnels = models.ForeignKey(Personnels, related_name='perso_loc',on_delete=models.CASCADE,blank=True,editable=False)
+	voiture = models.ForeignKey(Voiture, related_name='voiture_loue',on_delete=models.CASCADE,blank=True,editable=False)
+	locataire =  models.CharField(max_length=100)
+	duree_location =  models.FloatField()
+	prix_a_paye =  models.FloatField()
+	prix_paye =  models.FloatField()
+	dettes = models.FloatField()
+
+	def __str__(self):
+		return f"Voiture:{self.voiture.marque} locataire:{self.locataire} duree_location:{self.duree_location} Prix a paye{self.prix_a_paye} Prix paye{self.prix_paye} Dettes{self.dettes}"
