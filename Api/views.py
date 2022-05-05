@@ -75,7 +75,32 @@ class EtatViewSet(viewsets.ModelViewSet):
 class LocationViewSet(viewsets.ModelViewSet):
     serializer_class = LocationSerializer
     queryset = Location.objects.all().order_by('-id')
+    authentication_classes = [JWTAuthentication, SessionAuthentication]
     permission_classes = IsAuthenticated,
+
+    @transaction.atomic()
+    def create(self,request):
+        data = request.data
+        user = request.user
+        personnels=Personnels.objects.get(user=user)
+        tarif:Tarif = Tarif.objects.get(id = int(data.get('tarif')))
+        prix=tarif.prix_par_jour
+        
+        location1:Location = Location(
+            personnels=personnels,
+            locataire=data.get('locataire'),
+            duree_location=data.get('duree_location'),
+            prix_paye=data.get('prix_paye'),
+            )
+
+        location1.prix_a_paye=(float(location1.duree_location)*prix)
+        location1.dettes=location1.prix_a_paye-float(location1.prix_paye)
+
+        location1.user=request.user
+        location1.save()
+
+        return Response({"status":"location effectue avec success"},201)
+
 
 class TarifViewSet(viewsets.ModelViewSet):
     serializer_class = TarifSerializer
