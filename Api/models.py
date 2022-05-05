@@ -46,7 +46,7 @@ class Voiture(models.Model):
 
 class Document(models.Model):
 	id = models.AutoField(primary_key=True)
-	voiture = models.ForeignKey(Voiture, related_name='docu_voiture',on_delete=models.CASCADE,blank=True,editable=False)
+	voiture = models.ForeignKey(Voiture, related_name='docu_voiture',on_delete=models.CASCADE,blank=True)
 	carte_grise = models.CharField(max_length=150)
 	carte_rose =  models.CharField(max_length=100)
 	assurance =  models.CharField(max_length=150)
@@ -68,16 +68,16 @@ class Chauffeur(models.Model):
 
 class Tarif(models.Model):
 	id = models.AutoField(primary_key=True)
-	voiture = models.ForeignKey(Voiture, related_name='tarif_voiture',on_delete=models.CASCADE,blank=True,editable=False)
-	prix_jour =  models.FloatField()
+	voiture = models.ForeignKey(Voiture, related_name='tarif_voiture',on_delete=models.CASCADE,blank=True)
+	prix_par_jour =  models.FloatField()
 
 	def __str__(self):
-		return f"Voiture:{self.voiture.max_length} Prix par Jour:{self.prix_jour}"
+		return f"Voiture:{self.voiture.marque} Prix par Jour:{self.prix_par_jour}"
 
 class Location(models.Model):
 	id = models.AutoField(primary_key=True)
 	personnels = models.ForeignKey(Personnels, related_name='perso_loc',on_delete=models.CASCADE,blank=True,editable=False)
-	voiture = models.ForeignKey(Voiture, related_name='voiture_loue',on_delete=models.CASCADE,blank=True,editable=False)
+	tarif = models.ForeignKey(Tarif, related_name='tarif_voitloue',on_delete=models.CASCADE,blank=True,null=True)
 	locataire =  models.CharField(max_length=100)
 	duree_location =  models.FloatField()
 	prix_a_paye =  models.FloatField()
@@ -85,4 +85,4 @@ class Location(models.Model):
 	dettes = models.FloatField()
 
 	def __str__(self):
-		return f"Voiture:{self.voiture.marque} locataire:{self.locataire} duree_location:{self.duree_location} Prix a paye{self.prix_a_paye} Prix paye{self.prix_paye} Dettes{self.dettes}"
+		return f"tarif:{self.tarif.prix_par_jour} locataire:{self.locataire} duree_location:{self.duree_location} Prix a paye{self.prix_a_paye} Prix paye{self.prix_paye} Dettes{self.dettes}"

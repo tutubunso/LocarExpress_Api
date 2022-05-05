@@ -39,7 +39,6 @@ class PersonnelsViewSet(viewsets.ModelViewSet):
     @transaction.atomic()
     def create(self,request):
         data = request.data
-        station:Station = Station.objects.get(id = int(data.get('station')))
 
         user = User(
             username = data.get('user.username'),
@@ -56,9 +55,9 @@ class PersonnelsViewSet(viewsets.ModelViewSet):
             )
         user.save()
         #group = data.pop('group')
-        group: Group= Group.objects.get(id= data.get('group'))
-        user.groups.add(group)
-        user.save()
+        #group: Group= Group.objects.get(id= data.get('group'))
+        #user.groups.add(group)
+        #user.save()
         personnel.save()
         serializer = PersonnelsSerializer(personnel,many=False).data
         return Response(serializer,201)
